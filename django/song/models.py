@@ -44,7 +44,7 @@ class Song(models.Model):
 
     @property
     def artist(self):
-        return self.album.artist.all()
+        return self.album.artists.all()
 
     @property
     def release_date(self):
@@ -66,7 +66,7 @@ class Song(models.Model):
 
 
     def __str__(self):
-        artists = ', '.join(self.album.artist.values_list('name', flat=True))
+        artists = ', '.join(self.album.artists.values_list('name', flat=True))
         return f'{artists} - {self.title} ({self.album.title})'
         # return self.title
 
