@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
+    # Thirdparty App
+    'django_extensions',
+
+
+    # Custom App
     'album',
     'artist',
     'song',
