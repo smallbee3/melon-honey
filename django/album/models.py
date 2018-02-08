@@ -6,11 +6,11 @@ from artist.models import Artist
 class Album(models.Model): # -> 모델을 상속받는 모델 클래스
     title = models.CharField('앨범명', max_length=255)
     img_cover = models.ImageField(
-        '커버이미지',
+        '커버 이미지',
         upload_to='album',
         blank=True,
     )
-    artists = models.ManyToManyField(Artist, verbose_name='가수')
+    artists = models.ManyToManyField(Artist, verbose_name='아티스트 목록')
     # 수업시간
 
     # song은 Song 클래스에서 다대일(ForeignKey)로 참조
@@ -32,6 +32,8 @@ class Album(models.Model): # -> 모델을 상속받는 모델 클래스
             title=self.title,
             artists = ', '.join(self.artists.values_list('name', flat=True))
         )
+
+
 
 # 얘가 아티스트랑 연결. 하위개념이 앨범, 상위개념이 아티스트
 # 그러면 관계 정의필드에서 하위필드.
