@@ -10,7 +10,7 @@ class Album(models.Model): # -> 모델을 상속받는 모델 클래스
         upload_to='album',
         blank=True,
     )
-    artists = models.ManyToManyField(Artist, verbose_name='가수')
+    artist = models.ManyToManyField(Artist, verbose_name='가수')
     # 수업시간
 
     # song은 Song 클래스에서 다대일(ForeignKey)로 참조

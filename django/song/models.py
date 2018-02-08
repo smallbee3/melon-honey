@@ -44,7 +44,7 @@ class Song(models.Model):
 
     @property
     def artist(self):
-        return self.album.artists.all()
+        return self.album.artist.all()
 
     @property
     def release_date(self):
