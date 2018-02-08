@@ -10,7 +10,7 @@ class Album(models.Model): # -> 모델을 상속받는 모델 클래스
         upload_to='album',
         blank=True,
     )
-    artist = models.ManyToManyField(Artist, verbose_name='가수')
+    artists = models.ManyToManyField(Artist, verbose_name='가수')
     # 수업시간
 
     # song은 Song 클래스에서 다대일(ForeignKey)로 참조
@@ -30,7 +30,7 @@ class Album(models.Model): # -> 모델을 상속받는 모델 클래스
         # return f'앨범명: {self.title}'
         return '{title} [{artists}]'.format(
             title=self.title,
-            artists =  ', '.join(self.artist.values_list('name', flat=True))
+            artists = ', '.join(self.artist.values_list('name', flat=True))
         )
 
 # 얘가 아티스트랑 연결. 하위개념이 앨범, 상위개념이 아티스트
