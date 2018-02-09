@@ -24,7 +24,10 @@ class Album(models.Model): # -> 모델을 상속받는 모델 클래스
     @property
     def genre(self):
         # 장르는 가지고 있는 노래들에서 가져오기
-        return ''
+        return ','.join(self.song_set.values_list('genre', flat=True).distinct())
+        # return self.song_set.values_list('genre', flat=True).distinct()
+
+
 
     def __str__(self):
         # return f'앨범명: {self.title}'

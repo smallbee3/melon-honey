@@ -3,7 +3,9 @@
 {% block content %}
     <ul>
         {% for artist in artists %}
-        <li>{{  artist.name }}</li>
+        <li>
+            {{  artist.name }} {{ artist.birth_date }} {{ artist.intro }}
+        </li>
         {% endfor %}
     </ul>
 {%  endblock %}

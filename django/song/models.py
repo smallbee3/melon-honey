@@ -63,7 +63,7 @@ class Song(models.Model):
         # 2017.01.15
         # return self.album.release_date
 
-
+    # 이전에 사용했던 방식.
     # datetime.strftime(
     #     # timezone.make_naive(self.created_date),
     #     timezone.localtime(self.created_date),
