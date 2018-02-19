@@ -30,11 +30,6 @@ class Artist(models.Model):
         max_length=30,
         blank=True,
     )
-    # member = models.CharField(
-    #     '멤버',
-    #     max_length=100,
-    #     blank=True,
-    # )
     nationality = models.CharField(
         '국적',
         max_length=50,
@@ -62,6 +57,12 @@ class Artist(models.Model):
     )
     # 수업시간
 
+
+    # member = models.CharField(
+    #     '멤버',
+    #     max_length=100,
+    #     blank=True,
+    # )
     # agency = models.CharField(
     #     '소속사',
     #     max_length=50,

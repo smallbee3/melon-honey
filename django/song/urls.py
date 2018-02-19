@@ -1,8 +1,9 @@
 from django.urls import path
 
-from song.views import song_list
+from . import views
 
 app_name = 'song'
 urlpatterns = [
-    path('', song_list),
+    path('', views.song_list, name='song-list'),
+    path('search/', views.song_search, name='song-search')
 ]

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="search">음악 입력</label>
+            <input id="search" type="text" name="keyword" type="text" class="form-control" placeholder="song search">
+        </div>
+
+        <button type="submit" class="btn btn-primary">음악 검색</button>
+    </form>
+
+
+{#    {% if songs %}#}
+        <ul>
+            {% for song in songs %}
+                <li>{{ song.title }}</li>
+            {% endfor %}
+        </ul>
+{#    {% endif %}#}
+
+{% endblock %}

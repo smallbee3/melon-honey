@@ -3,8 +3,15 @@
 {% block content %}
     <ul>
         {% for artist in artists %}
-        <li>
-            {{  artist.name }} {{ artist.birth_date }} {{ artist.intro }}
+            <br>
+            이름: {{ artist.name }}<br>
+            본명: {{ artist.real_name }}<br>
+            국적: {{ artist.nationality }}<br>
+            생년월일: {{ artist.birth_date }}<br>
+            별자리: {{ artist.constellation }}<br>
+            혈액형: {{ artist.blood_type }}<br>
+            혈액형: {{ artist.get_blood_type_display }}<br>
+            소개: {{ artist.intro|linebreaksbr|truncatewords:20 }}<br>
         </li>
         {% endfor %}
     </ul>

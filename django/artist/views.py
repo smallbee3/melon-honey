@@ -22,23 +22,30 @@ def artist_list(request):
 
 def artist_add(request):
 
-
     if request.method == 'POST':
 
         # return HttpResponse(name)
-
-
         name = request.POST['name']
-        birthday_text = request.POST['birthday']
-        birth_date = datetime.strptime(birthday_text, '%Y.%m.%d')
+        real_name = request.POST['real_name']
+        nationality = request.POST['nationality']
+        constellation = request.POST['constellation']
+        blood_type = request.POST['blood_type']
 
         intro = request.POST['intro']
 
-
+        if request.POST['birth_date']:
+            birthday_text = request.POST['birth_date']
+            birth_date = datetime.strptime(birthday_text, '%Y-%m-%d')
+        else:
+            birth_date = None
 
         Artist.objects.create(
             name=name,
+            real_name=real_name,
+            nationality=nationality,
             birth_date=birth_date,
+            constellation=constellation,
+            blood_type=blood_type,
             intro=intro,
         )
 

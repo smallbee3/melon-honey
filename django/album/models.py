@@ -15,27 +15,19 @@ class Album(models.Model): # -> 모델을 상속받는 모델 클래스
 
     # song은 Song 클래스에서 다대일(ForeignKey)로 참조
     release_date = models.DateField('발매일', blank=True, null=True)
+
     # genre = models.CharField('장르', max_length=100, blank=True)
     # 장르는 가지고 있는 노래들에서 가져오기
-
-    # release_company = models.CharField('발매사', max_length=50, blank=True)
-    # agency = models.CharField('기힉사', max_length=50, blank=True)
-
     @property
     def genre(self):
-        # 장르는 가지고 있는 노래들에서 가져오기
         return ','.join(self.song_set.values_list('genre', flat=True).distinct())
-        # return self.song_set.values_list('genre', flat=True).distinct()
-
-
 
     def __str__(self):
         # return f'앨범명: {self.title}'
         return '{title} [{artists}]'.format(
             title=self.title,
-            artists = ', '.join(self.artists.values_list('name', flat=True))
+            artists=', '.join(self.artists.values_list('name', flat=True))
         )
-
 
 
 # 얘가 아티스트랑 연결. 하위개념이 앨범, 상위개념이 아티스트

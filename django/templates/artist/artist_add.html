@@ -1,4 +1,5 @@
 
+{% extends 'base.html' %}
 
 
 {% block content %}
@@ -17,13 +18,28 @@
         </div>
 
         <div class="form-group">
-            <label for="birthday">생년월일</label>
-            <input id="birthday" type="text" name="birthday" type="text" class="form-control" placeholder="xxxx.xx.xx">
+            <label for="real_name">본명</label>
+            <input id="real_name" type="text" name="real_name" type="text" class="form-control" placeholder="별명">
         </div>
 
         <div class="form-group">
-            <label for="reral_name">국적</label>
-            <input id="reral_name" type="text" name="reral_name" type="text" class="form-control" placeholder="별명">
+            <label for="nationality">국적</label>
+            <input id="nationality" type="text" name="nationality" type="text" class="form-control" placeholder="국적">
+        </div>
+
+        <div class="form-group">
+            <label for=birth_date">생년월일</label>
+            <input id=birth_date" type="text" name="birth_date" class="form-control" placeholder="xxxx-xx-xx">
+        </div>
+
+        <div class="form-group">
+            <label for="constellation">별자리</label>
+            <input id="constellation" type="text" name="constellation" type="text" class="form-control" placeholder="별자리">
+        </div>
+
+        <div class="form-group">
+            <label for="blood_type">혈액형</label>
+            <input id="blood_type" type="text" name="blood_type" type="text" class="form-control" placeholder="혈액형">
         </div>
 
         <div class="form-group">
