@@ -67,9 +67,10 @@ def song_search(request):
     '''
     print(request.GET)
     print(type(request.GET))
+
     keyword = request.GET.get('keyword')
     # keyword = request.GET['keyword']
-
+    # -> 아래 줄에서 되고 여기서 안되는것은 바로 아래의 if문으로 검사하기 때문?
 
 
     # if request.method == 'GET': #'get'으로 하면 안됨.
