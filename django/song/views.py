@@ -1,3 +1,6 @@
+from collections import namedtuple
+from typing import NamedTuple
+
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -50,7 +53,6 @@ def song_search(request):
     """
 
     # 2. 중복되는 render함수 합치기
-    context = {}
     '''
     02/19 과제
     # Song과 연결된 Artist의 name에 keyword가 포함되는 경우
@@ -66,24 +68,33 @@ def song_search(request):
      -> 아티스트로 검색한 노래 결과, 앨범으로 검색한 노래 결과, 제목으로 검색한 노래 결과
     '''
     print(request.GET)
-    print(type(request.GET))
+    # print(type(request.GET))
 
     keyword = request.GET.get('keyword')
+    #######################################
     # keyword = request.GET['keyword']
     # -> 아래 줄에서 되고 여기서 안되는것은 바로 아래의 if문으로 검사하기 때문?
-
+    # 이 아님. 아래줄에서도 주소창으로 get방식으로 접근하면 'keyword'가 없기 때문에
+    # 같은 에러가 발생.
+    #######################################
 
     # if request.method == 'GET': #'get'으로 하면 안됨.
-    # keyword = request.GET['keyword'].strip() # -> 양쪽의 공백이 있을 경우
+    #   keyword = request.GET['keyword'].strip() # -> 양쪽의 공백이 있을 경우
+
+    context = {
+        'song_infos': [],
+    }
 
     if keyword:  # -> 공백(엔터) 값이 아닐 경우
                  #   (이게 없으면 ''가 모든 song과 매치되어서 모든 song이 출력됨)
         # return HttpResponse(keyword)
-        songs = Song.objects.filter(
-            Q(album__artists__name__contains=keyword) |
-            Q(album__title__contains=keyword) |
-            Q(title__contains=keyword)
-        ).distinct()
+
+        # 2/19 수업시간 마지막 부분에 'Q'와 '|' 실습 (녹화안됨)
+        # songs = Song.objects.filter(
+        #     Q(album__artists__name__contains=keyword) |
+        #     Q(album__title__contains=keyword) |
+        #     Q(title__contains=keyword)
+        # ).distinct()
             # context = {
             #     'songs': songs,
             # }
@@ -94,23 +105,117 @@ def song_search(request):
     #     return render(request, 'song/song_search.html')
 
 
-        # Song과 연결된 Artist의 name에 keyword가 포함되는 경우
-        songs_from_artists = Song.objects.filter(
-            album__artists__name__contains=keyword
-        )
-        context['songs_from_artists'] = songs_from_artists
 
-        # Song과 연결된 Album의 title에 keyword가 포함되는 경우
-        songs_from_albums = Song.objects.filter(
-            album__title__contains=keyword
-        )
-        context['songs_from_albums'] = songs_from_albums
+        # 아래 부분은 4단계에서 'Q'를 사용하면서 필요없어짐
+        #############################################
+        # #Song과 연결된 Artist의 name에 keyword가 포함되는 경우
+        # songs_from_artists = Song.objects.filter(
+        #     album__artists__name__contains=keyword
+        # )
+        # context['songs_from_artists'] = songs_from_artists
+        #
+        # # Song과 연결된 Album의 title에 keyword가 포함되는 경우
+        # songs_from_albums = Song.objects.filter(
+        #     album__title__contains=keyword
+        # )
+        # context['songs_from_albums'] = songs_from_albums
+        #
+        # # Song의 title에 keyword가 포함되는 경우
+        # songs_from_title = Song.objects.filter(
+        #     title__contains=keyword
+        # )
+        # context['songs_from_title'] = songs_from_title
+        #############################################
 
-    # Song의 title에 keyword가 포함되는 경우
-        songs_from_title = Song.objects.filter(
-            title__contains=keyword
+
+        # 0단계 - '리스트'로 시도하다 실패 because of 템플릿언어 리스트
+        #
+        # items = []
+        # items.append([songs_from_artists, '아티스트명'])
+        # items.append([songs_from_albums, '앨범명'])
+        # items.append([songs_from_title, '노래제목'])
+
+
+        # 1단계 - '딕셔너리'로 수업시간 실습
+        # context['song_infos'].append({
+        #     'type': '아티스트명',
+        #     'songs': songs_from_artists,
+        # })
+        # context['song_infos'].append({
+        #     'type': '앨범명',
+        #     'songs': songs_from_albums,
+        # })
+        # context['song_infos'].append({
+        #     'type': '노래제목',
+        #     'songs': songs_from_title,
+        # })
+
+
+        # 2단계 - zip을 사용해서 깔끔하게 해보기 실습
+        # type_list = ('아티스트명', '앨범명', '노래제목')
+        # songs_list = (songs_from_artists, songs_from_albums, songs_from_title)
+        # items = zip(type_list, songs_list)
+        #
+        # for types, songs in items:
+        #     context['song_infos'].append({
+        #         'type': types,
+        #         'songs': songs,
+        #     })
+
+
+        # 3단계 - zip쓸 때 길어지면 알아보기 힘드니 좀 더 보기 쉽게
+        # song_infos = (
+        #     ('아티스트명', songs_from_artists),
+        #     ('앨범명', songs_from_albums),
+        #     ('노래제목', songs_from_title),
+        # )
+        # for type, songs in song_infos:
+        #     context['song_infos'].append({
+        #         'type': type,
+        #         'songs': songs,
+        #     })
+
+
+        # 4단계 - 어제 배운 "Q" objects를 써보기
+        # song_infos = (
+        #     ('아티스트명', Q(album__artists__name__contains=keyword)),
+        #     ('앨범명', Q(album__title__contains=keyword)),
+        #     ('노래제목', Q(title__contains=keyword)),
+        # )
+        # for type, q in song_infos:
+        #     context['song_infos'].append({
+        #         'type': type,
+        #         'songs': Song.objects.filter(q),
+        #     })
+
+
+        # 5-1단계 - 튜플에 이름 붙이기
+        # SongInfo = namedtuple('SongInfo', ['type', 'q'])
+
+
+        # 5-2단계 - 바로 위에 '튜플에 이름 붙이기'는 것에 타입까지 명시
+        # https://docs.python.org/3/library/typing.html#typing.NamedTuple
+        class SongInfo(NamedTuple):
+            type: str
+            q: Q
+
+        song_infos = (
+            SongInfo(
+                type='아티스트명',
+                q=Q(album__artists__name__contains=keyword)),
+            SongInfo(
+                type='앨범명',
+                q=Q(album__title__contains=keyword)),
+            SongInfo(
+                type='노래제목',
+                q=Q(title__contains=keyword)),
         )
-        context['songs_from_title'] = songs_from_title
+        for type, q in song_infos:
+            context['song_infos'].append({
+                'type': type,
+                'songs': Song.objects.filter(q),
+            })
+
 
 # 2. 중복되는 render함수 합치기
     # 만약 method가 POST였다면 context에 'songs'가 채워진 상태,
