@@ -15,11 +15,17 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# ROOT_DIR = os.path.
+
+
+
 # 'django/templates' 폴더
 TEMPLATES_DIR= os.path.join(BASE_DIR, 'templates')
 
 # 'django/static' 폴더
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+
 # Django에서 정적파일을 검색할 경로 목록
 STATICFILES_DIRS = [
     STATIC_DIR
@@ -152,3 +158,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+

@@ -16,6 +16,17 @@ class Artist(models.Model):
         (BLOOD_TYPE_AB, 'AB형'),
         (BLOOD_TYPE_OTHER, '기타'),
     )
+    artist_id = models.CharField(
+        '멜론 Artist ID',
+        max_length=20,
+        blank=True,
+        null=True,
+        # unique=True,
+        # unique=True걸기전에 null=True만 허용하기 위해
+        # make migration, migrate하고 shell에서
+        # 값을 바꿔줄 것.
+    )
+
     img_profile = models.ImageField(
         '프로필 이미지',
         upload_to='artist',

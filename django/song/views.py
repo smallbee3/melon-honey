@@ -68,7 +68,14 @@ def song_search(request):
      -> 아티스트로 검색한 노래 결과, 앨범으로 검색한 노래 결과, 제목으로 검색한 노래 결과
     '''
     print(request.GET)
-    # print(type(request.GET))
+    print(type(request.GET))
+    print(request.GET.get('keyword'))
+
+    # print(request.GET['keyword'])
+    # -> GET방식에서 'keyword'가 없는상태로 접근하면
+    #    MultiValueDictKeyError가 발생
+    #    ex) 주소창에서 엔터치고 들어가는 것
+
 
     keyword = request.GET.get('keyword')
     #######################################
@@ -210,9 +217,9 @@ def song_search(request):
                 type='노래제목',
                 q=Q(title__contains=keyword)),
         )
-        for type, q in song_infos:
+        for types, q in song_infos:
             context['song_infos'].append({
-                'type': type,
+                'types': types,
                 'songs': Song.objects.filter(q),
             })
 
@@ -221,3 +228,11 @@ def song_search(request):
     # 만약 method가 POST였다면 context에 'songs'가 채워진 상태,
     # GET이면 빈 상태로 render실행
     return render(request, 'song/song_search.html', context)
+
+
+def song_add_from_melon(request):
+
+    # 패키지 분할
+
+    pass
+
