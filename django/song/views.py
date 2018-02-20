@@ -66,17 +66,23 @@ def song_search(request):
      -> 아티스트로 검색한 노래 결과, 앨범으로 검색한 노래 결과, 제목으로 검색한 노래 결과
     '''
     print(request.GET)
-    if request.method == 'GET':
-        keyword = request.GET['keyword'].strip() # -> 양쪽의 공백이 있을 경우
+    print(type(request.GET))
+    keyword = request.GET.get('keyword')
+    # keyword = request.GET['keyword']
 
-        if keyword:  # -> 공백(엔터) 값이 아닐 경우
-                     #   (이게 없으면 ''가 모든 song과 매치되어서 모든 song이 출력됨)
-            # return HttpResponse(keyword)
-            songs = Song.objects.filter(
-                Q(album__artists__name__contains=keyword) |
-                Q(album__title__contains=keyword) |
-                Q(title__contains=keyword)
-            ).distinct()
+
+
+    # if request.method == 'GET': #'get'으로 하면 안됨.
+    # keyword = request.GET['keyword'].strip() # -> 양쪽의 공백이 있을 경우
+
+    if keyword:  # -> 공백(엔터) 값이 아닐 경우
+                 #   (이게 없으면 ''가 모든 song과 매치되어서 모든 song이 출력됨)
+        # return HttpResponse(keyword)
+        songs = Song.objects.filter(
+            Q(album__artists__name__contains=keyword) |
+            Q(album__title__contains=keyword) |
+            Q(title__contains=keyword)
+        ).distinct()
             # context = {
             #     'songs': songs,
             # }
@@ -88,22 +94,22 @@ def song_search(request):
 
 
         # Song과 연결된 Artist의 name에 keyword가 포함되는 경우
-            songs_from_artists = Song.objects.filter(
-                album__artists__name__contains=keyword
-            )
-            context['songs_from_artists'] = songs_from_artists
+        songs_from_artists = Song.objects.filter(
+            album__artists__name__contains=keyword
+        )
+        context['songs_from_artists'] = songs_from_artists
 
         # Song과 연결된 Album의 title에 keyword가 포함되는 경우
-            songs_from_albums = Song.objects.filter(
-                album__title__contains=keyword
-            )
-            context['songs_from_albums'] = songs_from_albums
+        songs_from_albums = Song.objects.filter(
+            album__title__contains=keyword
+        )
+        context['songs_from_albums'] = songs_from_albums
 
-        # Song의 title에 keyword가 포함되는 경우
-            songs_from_title = Song.objects.filter(
-                title__contains=keyword
-            )
-            context['songs_from_title'] = songs_from_title
+    # Song의 title에 keyword가 포함되는 경우
+        songs_from_title = Song.objects.filter(
+            title__contains=keyword
+        )
+        context['songs_from_title'] = songs_from_title
 
 # 2. 중복되는 render함수 합치기
     # 만약 method가 POST였다면 context에 'songs'가 채워진 상태,
