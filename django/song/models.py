@@ -16,21 +16,23 @@ from artist.models import Artist
 
 class Song(models.Model):
 
+    song_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
+
     album = models.ForeignKey(
         Album,
         on_delete=models.CASCADE,
         verbose_name='앨범',
-        # blank=True,
+        # blank=True, # -> 강남스타일 때문에 큰코 다친 후 주석처리함.
         null=True,
     )     # through_fields=('artist', 'song')) # (상위개념, 하위개념)
           # -> 한노래에 가수 여러명, 가수가 노래 여러개
     # 보통 중간자모델이 아래에 있어서 ''string으로 해주는 것.
     # 수업시간
-    title = models.CharField('곡 제목', max_length=255)
+    title = models.CharField('곡 제목', max_length=100)
 
     genre = models.CharField('장르', max_length=100, blank=True)
 
-    lyrics = models.TextField('가사', max_length=10000, blank=True)
+    lyrics = models.TextField('가사', blank=True)
 
     # artist = models.ManyToManyField(
     #     Artist,
@@ -84,8 +86,8 @@ class Song(models.Model):
             )
         else:
             return self.title
-
-
+            # 강남스타일 사건(앨범이 없어서 위에 출력에서 에러)때문에
+            # if self.album으로 분기함
 
 
 

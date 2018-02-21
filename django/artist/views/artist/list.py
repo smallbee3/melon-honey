@@ -7,6 +7,7 @@ __all__ = (
     'artist_list',
 )
 
+
 def artist_list(request):
 
     artists = Artist.objects.all()

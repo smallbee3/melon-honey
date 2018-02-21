@@ -3,17 +3,15 @@
 {% block content %}
 
 
-    <h1><a href="{% url 'artist:artist-search-from-melon' %}">아티스트 검색</a></h1>
+    <h1><a href="{% url 'artist:artist-search-from-melon' %}">멜론에서 아티스트 검색</a></h1>
     <form action="" method="GET">
         {#        {% csrf_token %}#}
         <div class="form-group">
-            <label for="search">아티스트 입력</label>
-            <input id="search" type="text" name="keyword" type="text" class="form-control" placeholder="artist search"
-                   value="{{ request.GET.keyword }}">
+            <input type="text" name="keyword" class="form-control" value="{{ request.GET.keyword }}">
         </div>
-
         <button type="submit" class="btn btn-primary">아티스트 검색</button>
     </form>
+
 
     <ul>
         {% for artist_info in artist_info_list %}
@@ -23,8 +21,8 @@
 
                 <form action="{% url 'artist:artist-add-from-melon' %}" method="POST">
                     {% csrf_token %}
-                    <input type="text" name="artist_id" value="{{ artist_info.artist_id }}">
-                    <button type="submit" class="btn btn-primary">저장</button>
+                    <input type="hidden" name="artist_id" value="{{ artist_info.artist_id }}">
+                    <button type="submit" class="btn btn-primary">DB 저장</button>
                 </form>
             </li>
         {% endfor %}

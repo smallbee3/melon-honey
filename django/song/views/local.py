@@ -5,7 +5,13 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from song.models import Song
+from ..models import Song
+
+
+__all__ = [
+    'song_list',
+    'song_search'
+]
 
 
 def song_list(request):
@@ -20,6 +26,7 @@ def song_list(request):
         'song/song_list.html',
         context,
     )
+
 
 def song_search(request):
     """
@@ -208,6 +215,9 @@ def song_search(request):
 
         song_infos = (
             SongInfo(
+                # type=123, -> 위의 class형 NamedTuple은
+                #               개발툴에서 디버깅을 할 수 있도록 함.
+                #               에러가 아닌, 워닝을 띄워줌.
                 type='아티스트명',
                 q=Q(album__artists__name__contains=keyword)),
             SongInfo(
@@ -228,11 +238,4 @@ def song_search(request):
     # 만약 method가 POST였다면 context에 'songs'가 채워진 상태,
     # GET이면 빈 상태로 render실행
     return render(request, 'song/song_search.html', context)
-
-
-def song_add_from_melon(request):
-
-    # 패키지 분할
-
-    pass
 

@@ -15,3 +15,7 @@ def album_list(request):
         'album/album_list.html',
         context,
     )
+
+
+# def search_album_from_melon(request):
+#     pass

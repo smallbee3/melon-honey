@@ -14,22 +14,18 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# ROOT_DIR = os.path.
-
-
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # 'django/templates' 폴더
-TEMPLATES_DIR= os.path.join(BASE_DIR, 'templates')
-
-# 'django/static' 폴더
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
-# Django에서 정적파일을 검색할 경로 목록
-STATICFILES_DIRS = [
-    STATIC_DIR
-]
+# Static
+# User-uploaded file들이 저장될 위치
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+MEDIA_URL = '/media/'
+
+
 
 # 만약 요청의 URL이 /static/으로 시작할 경우,
 # STATICFILES_DIRS에 정의된 경로 목록에서
@@ -38,10 +34,16 @@ STATICFILES_DIRS = [
 # 파일을 찾아 돌려준다.
 STATIC_URL = '/static/'
 # STATIC_URL = '/asdf/' -> 바꿀 수 있음.
-
 # -> 우선순위가 url.config보다 더 우선시 되는 것 같음.
 
 
+# 'django/static' 폴더
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# Django에서 정적파일을 검색할 경로 목록
+STATICFILES_DIRS = [
+    STATIC_DIR
+]
 
 
 # Quick-start development settings - unsuitable for production
@@ -52,8 +54,14 @@ SECRET_KEY = '2^cd83g%$xem2u(4fno)5s+e20)86v46y(!%rq@(x9*v!3&=ui'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['locul host']
+
+# 특정 도메인에서 드러왔을 때만 장고 앱이 실행되게 하는 것.
+# locul host -> 개발할 때 로컬호스트만 하니까.
 
 
 # Application definition
@@ -157,5 +165,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
 

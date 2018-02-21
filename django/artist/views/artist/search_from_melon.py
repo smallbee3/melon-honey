@@ -5,6 +5,7 @@ __all__ = (
     'artist_search_from_melon',
 )
 
+
 def artist_search_from_melon(request):
     """
     Template: artist/artist_search_from_melon.html
@@ -42,11 +43,11 @@ def artist_search_from_melon(request):
             href = li.select_one('a.thumb').get('href')
             p = re.compile(r"goArtistDetail\('(\d+)'\)")
 
-
             artist_id = re.search(p, href).group(1)
             name = dl.select_one('dt:nth-of-type(1) > a').get_text(strip=True)
             url_img_cover = li.select_one('a.thumb img').get('src')
 
+            # 디폴트 이미지의 경우에 이미지가 없는 예외 케이스 처리
             if url_img_cover == 'http://cdnimg.melon.co.kr':
                 url_img_cover = 'http://cdnimg.melon.co.kr/resource/image/web/default/noArtist_300_160727.jpg'
 

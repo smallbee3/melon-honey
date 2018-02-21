@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import redirect, render
 
 from ...models import Artist
@@ -7,7 +8,7 @@ __all__ = (
     'artist_add',
 )
 
-def artist_add(request):
+# def artist_add(request):
     # HTML에 Artist클래스가 받을 수 있는 모든 input을 구현
     #   img_profile은 제외
     # method가 POST면 request.POST에서 해당 데이터 처리
@@ -37,12 +38,42 @@ def artist_add(request):
 
     # 3. 전송받은 name을 이용해서 Artist를 생성
     #       이후 'artist:artist-list'로 redirect
+    #
+    # if request.method == 'POST':
+    #     name = request.POST['name']
+    #     Artist.objects.create(
+    #         name=name,
+    #     )
+    #     return redirect('artist:artist-list')
+    # else:
+    #     return render(request, 'artist/artist_add.html')
 
+
+def artist_add(request):
     if request.method == 'POST':
+
+        # return HttpResponse(name)
         name = request.POST['name']
+        real_name = request.POST['real_name']
+        nationality = request.POST['nationality']
+        constellation = request.POST['constellation']
+        blood_type = request.POST['blood_type']
+        intro = request.POST['intro']
+
+        if request.POST['birth_date']:
+            birthday_text = request.POST['birth_date']
+            birth_date = datetime.strptime(birthday_text, '%Y-%m-%d')
+        else:
+            birth_date = None
         Artist.objects.create(
             name=name,
+            real_name=real_name,
+            nationality=nationality,
+            birth_date=birth_date,
+            constellation=constellation,
+            blood_type=blood_type,
         )
         return redirect('artist:artist-list')
     else:
         return render(request, 'artist/artist_add.html')
+    # return HttpResponse('바보')

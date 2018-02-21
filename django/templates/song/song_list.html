@@ -3,7 +3,13 @@
 {% block content %}
     <ul>
         {% for song in songs %}
-        <li>{{  song.title }}</li>
+        <li>
+            song_id: {{ song.song_id }}<br>
+            title: {{ song.title }}<br>
+            genre: {{ song.genre }}<br>
+            lyrics: {{ song.lyrics|truncatewords:10 }}<br><br>
+
+        </li>
         {% endfor %}
     </ul>
 {%  endblock %}
