@@ -28,13 +28,13 @@ def song_list_crawler(q):
             strip=True)
         album = tr.select_one('td:nth-of-type(5) a').get_text(strip=True)
 
-        print(f'song_id: {song_id}')
-        print('')
-        print(f'title: {title}')
-        print('')
-        print(f'artist {artist}')
-        print('')
-        print(f'album: {album}')
+        # print(f'song_id: {song_id}')
+        # print('')
+        # print(f'title: {title}')
+        # print('')
+        # print(f'artist {artist}')
+        # print('')
+        # print(f'album: {album}')
 
         result.append({
             'song_id': song_id,
@@ -67,13 +67,13 @@ def song_detail_crawler(song_id):
     # items = ['앨범', '앨범명', '발매일', '발매일값', '장르', '장르값']
     items = [item.get_text(strip=True) for item in dl.contents if not isinstance(item, str)]
     # print(type(items)) -> <class 'list'>
-    print(items)
+    # print(items)
 
     it = iter(items)
-    print(zip(it, it))
+    # print(zip(it, it))
     ##############################################
-    # zip은 안에 iterable한 객체를 동시에 가져와서 묶는게 아니라
-    # 순서대로 호출해서 가져오기때문에
+    # zip은 안에 iterable한 객체를 동시에 가져와서 딕셔너리로
+    # 묶는게 아니라 순서대로 호출해서 가져오기때문에
     # iterator를 동시에 묶을 때는
     # 'iterator의 자신의 호출된 상태를 기억하는 특성'
     # 때문에 번갈아서 묶이는 것처럼 보이게 된다.
@@ -81,7 +81,7 @@ def song_detail_crawler(song_id):
 
     # print(type(it)) -> <class 'list_iterator'>
     description_dict = dict(zip(it, it))
-    print(description_dict)
+    # print(description_dict)
 
     # value가 없을 수도 있으므로 get()으로 넣어준다.
     # album = description_dict.get('앨범')

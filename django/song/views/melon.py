@@ -80,7 +80,7 @@ def song_add_from_melon(request):
     # ->
     # @require_POST
 
-        print(request.POST)
+        # print(request.POST)
         song_id = request.POST.get('song_id')
 
         result = song_detail_crawler(song_id)
